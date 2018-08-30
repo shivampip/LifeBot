@@ -21,10 +21,15 @@ class Lang:
         self.words= word_tokenize(self.msg)
         
     def lemma(self):
+        #return self.lemmatizer.lemmatize(self.msg, pos='a') #better -> good
         return self.lemmatizer.lemmatize(self.msg)
     
 
 if __name__=='__main__':
     lang= Lang()
-    lang.setMsg("oxes")
-    print(lang.lemma())
+    lang.setMsg("")
+    
+    words= ['oxes', 'cats', 'better', 'best', 'more beautiful']
+    for word in words:
+        lang.setMsg(word)
+        print(lang.lemma())
