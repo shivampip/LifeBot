@@ -1,9 +1,10 @@
 import processor
 
 
-txt= "words my name is Shivam Agrawal"
+txt= "wiki Shivam Agrawal"
 
-
+"""
 msg= processor.Message()
 msg.setMsg(txt)
 print(msg.process())
+"""

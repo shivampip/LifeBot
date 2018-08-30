@@ -12,8 +12,12 @@ class Message:
         
     def setMsg(self, msg):
         print('\nUser: '+msg)
-        self.msg.process(msg.lower())
-        
+        self.msg.setMsg(msg.lower())
+        #self.msg.process()
+    
+    def setBot(self, bot):
+        self.bot= bot
+    
     def process(self):
         out=""
         if(self.msg.txt.startswith("wiki")):
