@@ -20,6 +20,8 @@ class Processor:
         
         if(mtype=='text'):
             sen.sendText(msg)    
+        elif(mtype=='mtext'):
+            sen.sendTextM(msg)
         elif(mtype=='img'): 
             url= params[0]
             sen.sendImg(url)
@@ -43,10 +45,11 @@ class Processor:
             self.send(mtype='text', msg= summary)
         elif(self.msg.startswith('song')):
             sname= self.msg[5:]
-            rname= hello.giveTitle(sname)
-            self.send(mtype='text', msg= 'Downloading '+rname)
-            spath= hello.giveMe(sname)
-            self.send(mtype='audio', params=[spath])
+            legel, rname= hello.giveTitle(sname)
+            self.send(mtype='mtext', msg= rname)
+            if(legel):
+                spath= hello.giveMe(sname)
+                self.send(mtype='audio', params=[spath])
 
         else:
             self.send(mtype='text', msg='No match found')

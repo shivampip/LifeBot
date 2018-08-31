@@ -39,7 +39,7 @@ log.info("Dispatcher attached.")
 def notify(bot, update, msg):
     chatid= update.message.chat.id
     sen= sender.Sender(chatid, bot, update)
-    sen.sendText(msg+"\n:(")
+    sen.sendTextM(msg+"\n`If you know Shivam, tell him`")
 
 def error_callback(bot, update, error):
     log.error(str(error))

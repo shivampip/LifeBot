@@ -62,10 +62,29 @@ else:
 	playSong(v.title, bolo)
 """
 
+def giveInfo(v):
+	link= v.url
+	ress= mt.getAllStreams(link)
+	audio_streams=[]
+	for r_stream in ress:
+		if(r_stream.type=='audio'):
+			audio_streams.append(r_stream)
+	r= audio_streams[0]
+	size= getSize(r.filesize)
+	return size, str(size)+"MB"
+
+
 def giveTitle(songName):
     videos= mt.search_youtube(songName)
     v= videos[0]
-    return v.title
+    size, sizes= giveInfo(v)
+    data= '*Name:* '+v.title+'\n*Size:* '+sizes+'\n*Duration:* '+v.duration
+    legel= size<=c.SIZE_LIMIT 
+    if(not legel):
+    	data+="\n`File size should be less than "+str(c.SIZE_LIMIT)+" MB`\n*Try with another keyword*"
+    else:
+    	data+="\n`Downloading, Please wait`"
+    return legel, data
 
 def giveMe(songName):
     videos= mt.search_youtube(songName)

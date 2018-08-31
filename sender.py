@@ -1,5 +1,6 @@
 from telegram.ext import Updater, CommandHandler
 from telegram.ext import MessageHandler, Filters
+import telegram
 import logging as log 
 import c
 
@@ -16,6 +17,11 @@ class Sender:
 	def sendText(self, msg):
 		log.info("Sending text: "+msg)
 		self.bot.send_message(chat_id= self.chatid,text= msg)
+
+	def sendTextM(self, msg):
+		log.info("Sending text: "+msg)
+		self.bot.send_message(chat_id= self.chatid,text= msg, parse_mode=telegram.ParseMode.MARKDOWN)
+
 
 	def sendImg(self, url): 
 		pass
