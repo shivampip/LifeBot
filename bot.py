@@ -42,6 +42,7 @@ def notify(bot, update, msg):
     sen.sendText(msg+"\n:(")
 
 def error_callback(bot, update, error):
+    log.error(str(error))
     try:
         raise error
     except Unauthorized:

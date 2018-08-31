@@ -22,7 +22,7 @@ class Sender:
 
 	def sendAudio(self, url):
 		log.info("Sending Audio: "+url)
-		self.bot.send_audio(chat_id=self.chatid, audio=open(url, 'rb'))
+		self.bot.send_audio(chat_id=self.chatid, audio=open(url, 'rb'), timeout=1000)
 
 	def sendVideo(self, url):
 		pass 
