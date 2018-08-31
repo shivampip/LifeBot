@@ -1,4 +1,8 @@
-import hello
+import processor
 
-
-#print(hello.giveMe('despacito'))
+"""
+msg= processor.Message()
+msg.setMsg("Hello Welcome to LifeBot") 
+msg.fname= 'Shivam'
+msg.log()
+"""

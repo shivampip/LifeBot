@@ -59,6 +59,11 @@ else:
 	playSong(v.title, bolo)
 """
 
+def giveTitle(songName):
+    videos= mt.search_youtube(songName)
+    v= videos[0]
+    return v.title
+
 def giveMe(songName):
     videos= mt.search_youtube(songName)
     v= videos[0]
