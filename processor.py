@@ -51,6 +51,10 @@ class Processor:
                 spath= hello.giveMe(sname)
                 self.send(mtype='audio', params=[spath])
 
+        elif("i love you" in self.msg):
+            self.send(mtype='mtext', msg= "`But I don't love you`")
+        elif(self.msg.startswith("hello")):
+            self.send(mtype='mtext', msg= c.HELP_MSG)
         else:
             self.send(mtype='text', msg='No match found')
         log.info('='*20)

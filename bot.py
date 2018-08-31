@@ -1,5 +1,6 @@
 """
 https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#post-an-image-file-from-disk
+https://python-telegram-bot.readthedocs.io/en/stable/telegram.bot.html#telegram.Bot.send_document
 """
 
 from telegram.ext import Updater, CommandHandler
