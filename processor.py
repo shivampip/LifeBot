@@ -1,5 +1,6 @@
 import wiki
 import nlp
+import song
 
 class Message:
     
@@ -15,8 +16,9 @@ class Message:
         self.msg.setMsg(msg.lower())
         #self.msg.process()
     
-    def setBot(self, bot):
+    def setBot(self, bot, update):
         self.bot= bot
+        self.update= update
     
     def process(self):
         out=""
@@ -27,6 +29,13 @@ class Message:
         elif(self.msg.txt.startswith("play")):
             print("[ Playing "+self.msg.txt[5:]+" ]")
             pass
+        elif(self.msg.txt.startswith("song")):
+            name= self.msg.txt[5:]
+            print("Song: ",name)
+            sname= song.get(name)
+            chatid= self.update.message.chat.id
+            self.bot.send_audio(chat_id=chatid, audio=open(sname, 'rb'))
+            
         else:
             out= "Format not recognised"
             

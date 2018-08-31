@@ -1,10 +1,4 @@
-import processor
+import hello
 
 
-txt= "wiki Shivam Agrawal"
-
-"""
-msg= processor.Message()
-msg.setMsg(txt)
-print(msg.process())
-"""
+#print(hello.giveMe('despacito'))

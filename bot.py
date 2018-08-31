@@ -18,6 +18,7 @@ def hello(bot, update):
     
 def textpro(bot, update):
     msg.setMsg(update.message.text)
+    msg.setBot(bot, update)
     out= msg.process()
     update.message.reply_text(out)
 
