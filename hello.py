@@ -3,7 +3,10 @@ import os
 import pyglet
 from pytube.helpers import safe_filename
 import glob
+import c
 
+import logging as log 
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
 
 def getSize(ss):
     fsize= ss/1000000
@@ -11,9 +14,9 @@ def getSize(ss):
 
 def is_downloaded(fname):
 	fname= safe_filename(fname)
-	for file in glob.glob('Musics/*.*'):
+	for file in glob.glob('Files/Musics/*.*'):
 		li= file.rindex('.')
-		name= file[7:li]
+		name= file[13:li]
 		if(name==fname):
 			return file
 	return "NO"
@@ -22,7 +25,7 @@ def is_downloaded(fname):
 
 
 def playSong(title, fpath):
-	print("Playing",safe_filename(title))
+	log.info("Playing "+safe_filename(title))
 	song= pyglet.resource.media(fpath,streaming=False)
 	song.play()
 	pyglet.app.run() 
@@ -38,7 +41,7 @@ def download(v):
 			audio_streams.append(r_stream)
 	r= audio_streams[0]
 	mt.downloadM(r)
-	fpath= str(os.path.join('Musics',safe_filename(v.title)))+'.'+r.subtype
+	fpath= str(os.path.join('Files/Musics',safe_filename(v.title)))+'.'+r.subtype
 	#playSong(v.title, fpath)
 	return fpath
   
@@ -69,9 +72,10 @@ def giveMe(songName):
     v= videos[0]
     bolo= is_downloaded(v.title)
     if(bolo=='NO'):
-        print("Downloading ",v.title)
+        log.info("Downloading "+v.title)
         return download(v)
     else:
-        return bolo
+    	log.info("Already Downloaded")
+    	return bolo
 
 

@@ -1,8 +1,10 @@
-import processor
+import hello
+import c
+
+import logging as log 
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
 
 """
-msg= processor.Message()
-msg.setMsg("Hello Welcome to LifeBot") 
-msg.fname= 'Shivam'
-msg.log()
+hello.playSong('Song',hello.giveMe("raabta"))
+log.info("DDOONNEE")
 """

@@ -4,43 +4,76 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#po
 
 from telegram.ext import Updater, CommandHandler
 from telegram.ext import MessageHandler, Filters
+from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, ChatMigrated, NetworkError)
+
 import processor
+import sender
+import logging as log 
+import c
+
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
+"""
+log= logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+log.addHandler(logging.FileHandler('botlog.log'))
+"""
+
+#log.basicConfig(level=log.INFO, filename='botlog.log')
 
 
 
-print("Welcome to AI")
+
+log.info("Program started")
 updater= Updater("641238067:AAEB___d1oM4llx6XzaWzxe4g9CAomVN-P0")
-
-msg= processor.Message()
-
-def hello(bot, update):
-    update.message.reply_text('Hello {}, how are you?'.format(update.message.from_user.first_name))
-    
+   
 def textpro(bot, update):
-    msg.setMsg(update.message.text)
-    msg.setBot(bot, update)
-    out= msg.process()
-    update.message.reply_text(out)
+    log.info("msg received:")
+    pro= processor.Processor()
+    pro.get([bot, update])
 
-def stop(bot, update):
-    print("Stopping")
-    updater.stop()
-    
-def photo(bot, update):
-    chatid= update.message.chat.id
-    print(chatid)
-    bot.send_audio(chat_id=chatid, audio=open('rab.mp4', 'rb'))
-    #bot.send_photo(chat_id=chatid, photo=open('taj.jpeg', 'rb'))
-    #bot.send_photo(chat_id=chatid, photo='https://telegram.org/img/t_logo.png')
-    #update.message.reply_text("Your userid is "+update.message.from_user.id)
-    
-    
-updater.dispatcher.add_handler(CommandHandler('hola', hello))
-updater.dispatcher.add_handler(CommandHandler('stop', stop))
-updater.dispatcher.add_handler(CommandHandler('foto', photo))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.text, textpro))
+log.info("Dispatcher attached.")
+
+
+def notify(bot, update, msg):
+    chatid= update.message.chat.id
+    sen= sender.Sender(chatid, bot, update)
+    sen.sendText(msg+"\n:(")
+
+def error_callback(bot, update, error):
+    try:
+        raise error
+    except Unauthorized:
+        log.warn("Unauthorized")
+        notify(bot, update, "Unauthorized")
+        # remove update.message.chat_id from conversation list
+    except BadRequest:
+        log.warn("BadRequest")
+        notify(bot, update, "BadRequest")
+        # handle malformed requests - read more below!
+    except TimedOut:
+        log.warn("TimedOut")
+        notify(bot, update, "TimedOut")
+        # handle slow connection problems
+    except NetworkError:
+        log.warn("NetworkError")
+        notify(bot, update, "NetworkError")
+        # handle other connection problems
+    except ChatMigrated as e:
+        log.warn("ChatMigrated "+e)
+        # the chat_id of a group has changed, use e.new_chat_id instead
+    except TelegramError:
+        log.warn("TelegramError")
+        notify(bot, update, "TelegramError")
+        # handle all other telegram related errors
+
+updater.dispatcher.add_error_handler(error_callback)
+
+
 
 
 updater.start_polling()
+log.info("Polling started")
 updater.idle()
+log.info("IDLE")

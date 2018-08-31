@@ -1,59 +1,66 @@
+from telegram.ext import Updater, CommandHandler
+from telegram.ext import MessageHandler, Filters
+import sender
 import wiki
-import nlp
-import song
-import datetime
+import c
+import hello
 
-class Message:
-    
-    def __init__(self):
-        print("[ Inilizing Message ]")
-        self.msg= nlp.Lang()
+#===============================================================
+import logging as log 
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
+
+class Processor:
+
+    def __init__(self):  
+        pass
+
+    def send(self, mtype, msg=None, params=None):
+        chatid= self.update.message.chat.id
+        sen= sender.Sender(chatid, self.bot, self.update)
         
-    def print(self):
-        print("\nUser: "+self.msg)
-        
-    def setMsg(self, msg):
-        print('\nUser: '+msg)
-        self.msg.setMsg(msg.lower())
-        #self.msg.process()
-    
-    def log(self):
-        file= open("log.txt",'a')
-        file.write("\n["+str(datetime.datetime.now())+"] ["+self.fname+"] "+self.msg.txt)
-        file.close()
-        print("[logged]")
-        
-    def logc(self, msg):
-        file= open("log.txt",'a')
-        file.write("\n["+msg+"]")
-        file.close()
-    
-    def setBot(self, bot, update):
-        self.bot= bot
-        self.update= update
-        self.fname= update.message.from_user.first_name
-        self.log()
-    
+        if(mtype=='text'):
+            sen.sendText(msg)    
+        elif(mtype=='img'): 
+            url= params[0]
+            sen.sendImg(url)
+        elif(mtype=='audio'): 
+            url= params[0]
+            sen.sendAudio(url)
+        elif(mtype=='video'): 
+            url= params[0]
+            sen.sendVideo(url)
+        elif(mtype=='doc'):
+            url= params[0]
+            sen.sendDoc(url) 
+
+#============================================================================================
+#============================================================================================
+
     def process(self):
-        out=""
-        if(self.msg.txt.startswith("wiki")):
-            out= wiki.getSummery(self.msg.txt[5:])
-        elif(self.msg.txt.startswith("words")):
-            out= str(self.msg.words)
-        elif(self.msg.txt.startswith("play")):
-            print("[ Playing "+self.msg.txt[5:]+" ]")
-            pass
-        elif(self.msg.txt.startswith("song")):
-            name= self.msg.txt[5:]
-            print("Song: ",name)
-            self.update.message.reply_text("Downloading "+song.getName(name)+"\nPlease wait..")
-            sname= song.get(name)
-            chatid= self.update.message.chat.id
-            self.bot.send_audio(chat_id=chatid, audio=open(sname, 'rb'))
-            print("Song "+sname+" sent.")
-            self.logc("Song "+sname+" sent")            
+        log.info("Processing msg")
+        if(self.msg.startswith('wiki')):
+            summary= wiki.getSummery(self.msg[5:])
+            self.send(mtype='text', msg= summary)
+        elif(self.msg.startswith('song')):
+            sname= self.msg[5:]
+            rname= hello.giveTitle(sname)
+            self.send(mtype='text', msg= 'Downloading '+rname)
+            spath= hello.giveMe(sname)
+            self.send(mtype='audio', params=[spath])
+
         else:
-            out= "Format not recognised"
-            
-        print("\nLife : "+out)
-        return out
+            self.send(mtype='text', msg='No match found')
+        log.info('='*20)
+
+#============================================================================================
+#============================================================================================
+
+    def get(self, params): 
+        self.bot= params[0]
+        self.update= params[1]
+        self.msg= self.update.message.text.lower()
+        log.info("Message: "+self.msg)
+        self.process()
+
+    
+

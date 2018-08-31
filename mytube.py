@@ -5,6 +5,10 @@ import urllib
 import requests
 from bs4 import BeautifulSoup
 import subprocess
+import c
+
+import logging as log 
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
 
 class YoutubeMetadata:
     """A data store to store the information of a youtube video."""
@@ -20,7 +24,7 @@ class YoutubeMetadata:
 
 def search_youtube(query):
     """Behold the greatest magic trick ever : crawl and crawl."""
-    print("Searching youtube for :: {}".format(query))
+    log.info("Searching youtube for :: {}".format(query))
     base_url = "https://www.youtube.com"
     url = base_url + "//results?sp=EgIQAVAU&q=" + query
     response = requests.get(url)
@@ -48,12 +52,12 @@ def getAllStreams(link):
 
 def downloadV(stream):
     try:
-        os.mkdir("Videos")
+        os.mkdir("Files/Videos")
     except Exception as e:
         pass
-    print("Downloading, Please wait....")
-    stream.download(os.path.join(os.getcwd(),'Videos'))
-    print("Downloaded Successfully.")
+    log.info("Downloading, Please wait....")
+    stream.download(os.path.join(os.getcwd(),'Files/Videos'))
+    log.info("Downloaded Successfully.")
     return
 
 
@@ -61,9 +65,9 @@ def downloadV(stream):
 
 def downloadM(stream):
     try:
-        os.mkdir("Musics")
+        os.mkdir("Files/Musics")
     except Exception as e:
         pass
-    stream.download(os.path.join(os.getcwd(),'Musics'))
+    stream.download(os.path.join(os.getcwd(),'Files/Musics'))
     return
 
