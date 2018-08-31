@@ -22,6 +22,11 @@ class Message:
         file.write("\n["+str(datetime.datetime.now())+"] ["+self.fname+"] "+self.msg.txt)
         file.close()
         print("[logged]")
+        
+    def logc(self, msg):
+        file= open("log.txt",'a')
+        file.write("\n["+msg+"]")
+        file.close()
     
     def setBot(self, bot, update):
         self.bot= bot
@@ -45,7 +50,8 @@ class Message:
             sname= song.get(name)
             chatid= self.update.message.chat.id
             self.bot.send_audio(chat_id=chatid, audio=open(sname, 'rb'))
-            
+            print("Song "+sname+" sent.")
+            self.logc("Song "+sname+" sent")            
         else:
             out= "Format not recognised"
             
