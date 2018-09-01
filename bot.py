@@ -23,7 +23,6 @@ log.addHandler(logging.FileHandler('botlog.log'))
 
 
 
-
 log.info("Program started")
 updater= Updater("641238067:AAEB___d1oM4llx6XzaWzxe4g9CAomVN-P0")
    
