@@ -9,10 +9,11 @@ from telegram.error import (TelegramError, Unauthorized, BadRequest, TimedOut, C
 
 import processor
 import sender
-import logging as log 
+import logging as log
 import c
 
-log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT,handlers=[ log.StreamHandler(), log.FileHandler(c.LOG_PATH+'/'+c.LOG_FILE+'.log')])
+log.info('Logging Started')
 """
 log= logging.getLogger(__name__)
 log.setLevel(logging.INFO)
@@ -27,7 +28,6 @@ log.info("Program started")
 updater= Updater("641238067:AAEB___d1oM4llx6XzaWzxe4g9CAomVN-P0")
    
 def textpro(bot, update):
-    log.info("msg received:")
     pro= processor.Processor()
     pro.get([bot, update])
 

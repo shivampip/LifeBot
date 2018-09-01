@@ -66,7 +66,8 @@ class Processor:
         self.bot= params[0]
         self.update= params[1]
         self.msg= self.update.message.text.lower()
-        log.info("Message: "+self.msg)
+        self.senName= self.update.message.from_user.first_name
+        log.info("{"+self.senName+"} Message: "+self.msg)
         self.process()
 
     
