@@ -72,9 +72,8 @@ def error_callback(bot, update, error):
 updater.dispatcher.add_error_handler(error_callback)
 
 
-
-
 updater.start_polling()
 log.info("Polling started")
 updater.idle()
 log.info("IDLE")
+
