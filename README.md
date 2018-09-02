@@ -1,10 +1,10 @@
 # LifeBot
 A Telegram bot written in Python
 
-Telegram provides BotAPI.
+## Supported Features
 
-**Shivam Agrawal**
+* **wiki** india
+* **song** raabta
+* **book** Machine learning using Python
 
-## Done
-
-__This is italic text_ 
+New features are being added.
