@@ -26,7 +26,7 @@ log.addHandler(logging.FileHandler('botlog.log'))
 
 
 log.info("Program started")
-updater= Updater(shiva.BOT_TOKEN)
+updater= Updater(shiva.BOT_TOKEN)  #Bot Token is given by BotFather on Telegram while creating bot. (It can't be shared)
    
 def textpro(bot, update):
     pro= processor.Processor()
