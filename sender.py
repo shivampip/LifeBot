@@ -1,11 +1,11 @@
 from telegram.ext import Updater, CommandHandler
 from telegram.ext import MessageHandler, Filters
 import telegram
-import logging as log 
+import logging as log
 import c
 
-log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
-
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT,handlers=[ log.StreamHandler(), log.FileHandler(c.LOG_PATH+'/'+c.LOG_FILE+'.log')])
+#log.info('Logging Started')
 
 class Sender:   
 
@@ -34,4 +34,5 @@ class Sender:
 		pass 
 
 	def sendDoc(self, url):
-		pass
+		log.info('Sending Doc: '+url)
+		self.bot.send_document(chat_id=self.chatid, document=open(url, 'rb'), timeout= 1000)

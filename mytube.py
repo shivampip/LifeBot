@@ -5,10 +5,11 @@ import urllib
 import requests
 from bs4 import BeautifulSoup
 import subprocess
+import logging as log
 import c
 
-import logging as log 
-log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT,handlers=[ log.StreamHandler(), log.FileHandler(c.LOG_PATH+'/'+c.LOG_FILE+'.log')])
+#log.info('Logging Started')
 
 class YoutubeMetadata:
     """A data store to store the information of a youtube video."""

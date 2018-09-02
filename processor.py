@@ -2,12 +2,15 @@ from telegram.ext import Updater, CommandHandler
 from telegram.ext import MessageHandler, Filters
 import sender
 import wiki
-import c
 import hello
+import book
+import logging as log
+import c
 
+log.basicConfig(level=log.INFO, format= c.LOG_FORMAT,handlers=[ log.StreamHandler(), log.FileHandler(c.LOG_PATH+'/'+c.LOG_FILE+'.log')])
+#log.info('Logging Started')
 #===============================================================
-import logging as log 
-log.basicConfig(level=log.INFO, format= c.LOG_FORMAT)
+
 
 class Processor:
 
@@ -50,6 +53,20 @@ class Processor:
             if(legel):
                 spath= hello.giveMe(sname)
                 self.send(mtype='audio', params=[spath])
+        elif(self.msg.startswith("book")):
+            """n= 2
+            try:
+                n= int(self.msg[5])
+                name= self.msg[7:]
+            except Exception as e:
+                n= 2"""
+            name= self.msg[5:]
+            bk= book.Book()
+            bk.search(name)
+            self.send(mtype='text', msg= 'Downloading books.\nPlease wait')
+            urls= bk.process()
+            for url in urls:
+                self.send(mtype='doc', params=[url])
 
         elif("i love you" in self.msg):
             self.send(mtype='mtext', msg= "`But I don't love you`")
