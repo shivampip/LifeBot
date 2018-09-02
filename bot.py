@@ -11,6 +11,7 @@ import processor
 import sender
 import logging as log
 import c
+import shiva
 
 log.basicConfig(level=log.INFO, format= c.LOG_FORMAT,handlers=[ log.StreamHandler(), log.FileHandler(c.LOG_PATH+'/'+c.LOG_FILE+'.log')])
 log.info('Logging Started')
@@ -25,7 +26,7 @@ log.addHandler(logging.FileHandler('botlog.log'))
 
 
 log.info("Program started")
-updater= Updater("641238067:AAEB___d1oM4llx6XzaWzxe4g9CAomVN-P0")
+updater= Updater(shiva.BOT_TOKEN)
    
 def textpro(bot, update):
     pro= processor.Processor()
