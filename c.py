@@ -1,7 +1,7 @@
 #LOG_FORMAT= '[%(asctime)s]-[%(module)s]-%(message)s'
 
 
-LOG_PATH= 'Files'
+LOG_PATH= '../LifeBot'
 LOG_FILE= 'shivam'
 LOG_FORMAT= '[%(levelname)s]-[%(module)s]-[%(funcName)s]-%(message)s'
 
