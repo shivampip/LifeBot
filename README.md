@@ -10,4 +10,4 @@ A Telegram bot written in Python
 New features are being added.
 
 
-[![Watch the video](/Files/screenshott.jpg)](https://www.youtube.com/watch?v=1C9hfcveaFs&feature=youtu.be)
+[![Watch the video](/Files/screenshott.png)](https://www.youtube.com/watch?v=1C9hfcveaFs&feature=youtu.be)
